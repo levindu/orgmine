@@ -1830,10 +1830,15 @@ Will you force to update entry #%s? %s" id id plist))
 ;;;;
 
 (defun orgmine-project (&optional parent)
-  (let ((projects (elmine/get-projects)))
-    (mapcar (lambda (project)
-	      (orgmine-idname project))
-	    projects)))
+  (let ((projects (elmine/get-projects :limit 9999)))
+    (remove
+     nil
+     (mapcar (lambda (project)
+               (and (or (null parent)
+                        (equal (string-to-number parent)
+                               (orgmine-project-parent-id project)))
+	            (orgmine-idname project)))
+	     projects))))
 
 (defvar orgmine-project-hist nil)
 
@@ -1842,9 +1847,9 @@ Will you force to update entry #%s? %s" id id plist))
   (let* ((project (nth 1 (orgmine-get-property nil 'project nil t)))
 	 (collection (orgmine-project project)))
     (if project
-	(setq prompt (format "%s(default %s): " prompt project)))
+	(setq prompt (format "%s(parent_id %s): " prompt project)))
     (completing-read prompt collection nil t nil
-		     'orgmine-project-hist project)))
+		     'orgmine-project-hist)))
 
 (defvar orgmine-project-versions nil)
 
@@ -1853,6 +1858,10 @@ Will you force to update entry #%s? %s" id id plist))
     (mapcar (lambda (version)
 	      (orgmine-idname version))
 	    versions)))
+
+(defun orgmine-project-parent-id (plist)
+  (when-let (parent (plist-get plist :parent))
+    (plist-get parent :id)))
 
 (defun orgmine-current-issue ()
   "Return the number that point is on as a string.
