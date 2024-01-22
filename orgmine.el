@@ -60,31 +60,37 @@
 (defcustom orgmine-issue-title-format
   "[[redmine:issues/%{id}][#%{id}]] %{subject}"
   "Title format for issue entry."
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-journal-title-format
   "[[redmine:issues/%{id}#note-%{count}][V#%{id}-%{count}]] %{created_on} %{author}"
   "Title format for journal entry."
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-version-title-format
   "[[redmine:versions/%{id}][V#%{id}]] %{name}"
   "Title format for version entry."
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-tracker-title-format "%{name}"
   "Title format for tracker entry."
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-project-title-format
   "[[redmine:projects/%{identifier}][%{identifier}]] %{name}"
   "Title format for project entry."
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-wiki-page-title-format
   "[[redmine:projects/%{project}/wiki/%{title}][%{title}]]"
   "Title format for wiki page entry."
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-title-format-regexp
   (let ((brackert-link-regexp
@@ -92,29 +98,40 @@
     (concat "^[ \t]*" brackert-link-regexp "[ \t]*\\(.*?\\)"
 	    "[ \t]*\\(?:(" brackert-link-regexp ")\\)?$"))
   "Regular express to extract subject part from headline title."
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'regexp)
 
 (defcustom orgmine-user-name-format "%{firstname} %{lastname}"
   "User name format."
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-attachment-format
   (concat "[[%{content_url}][%{filename}]] (%{filesize} bytes)"
 	  " %{author.name} %{created_on}")
   "attachment item format."
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-journal-details-drawer "DETAILS"
   "Drawer name to hold journal details."
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-note-block-begin "#+begin_src gfm"
   ""
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-note-block-end "#+end_src"
   ""
-  :group 'orgmine)
+  :group 'orgmine
+  :type 'string)
+
+(defcustom orgmine-default-todo-keyword nil
+  "Default todo keyword if `om_default_todo` not defined."
+  :group 'orgmine
+  :type 'string)
 
 (defcustom orgmine-tags
   '((update-me . "UPDATE_ME")
@@ -131,7 +148,8 @@
     (attachments . "attachments")
     (wiki . "wiki"))
   "Alist of tags which are used in orgmine mode."
-  :group 'orgmine)
+  :group 'orgmine
+  :type '(alist :key-type symbol :value-type string))
 
 (defvar orgmine-tag-update-me)
 (defvar orgmine-tag-create-me)
@@ -172,7 +190,22 @@
      (default-todo-keyword . "New")))
   "An alist of redmine servers.
 Each element has the form (NAME CONFIGURATION)."
-  :group 'orgmine)
+  :group 'orgmine
+  :type '(repeat
+          (cons
+           (string :tag "Name")
+           (alist :tag "Server settings"
+                  :key-type
+                  (choice
+                   (const :tag "http://host:port" host)
+                   (const :tag "API Key" api-key)
+                   (const :tag "Issue Title Format" issue-title-format)
+                   (const :tag "Journal Title Format" journal-title-format)
+                   (const :tag "Version Title Format" version-title-format)
+                   (const :tag "Track Title Format" track-title-format)
+                   (const :tag "Username Format" user-name-format)
+                   (const :tag "Default Todo Keyword" default-todo-keyword))
+                  :value-type (string :tag "Value")))))
 
 (defcustom orgmine-setup-hook nil
   "Hook called in `orgmine-setup'."
