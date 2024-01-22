@@ -3270,12 +3270,11 @@ Then entry could be an issue, version, tracker or project."
 	    (mapconcat 'identity list " ")
 	    "\n")))
 
-(defun orgmine-insert-category-property-template ()
-  (let* ((users (elmine/get-categories)) ; TODO
+(defun orgmine-insert-category-property-template (project)
+  (let* ((categories(elmine/get-project-categories project))
 	 (list (mapcar (lambda (category)
-                         ;; XXX
-			 (orgmine-idname category orgmine-user-name-format t))
-		       category)))
+			 (orgmine-idname category))
+		       categories)))
     (insert "#+PROPERTY: om_category_ALL "
 	    (mapconcat 'identity list " ")
 	    "\n")))
@@ -3325,6 +3324,7 @@ Then entry could be an issue, version, tracker or project."
 	(insert "#+PROPERTY: om_server " orgmine-server "\n"))
     (insert "#+PROPERTY: om_project " project "\n")
     (orgmine-insert-status-property-template)
+    (orgmine-insert-category-property-template (string-to-number project))
     (orgmine-insert-tracker-property-template (string-to-number project))
     (orgmine-insert-assigned-to-property-template)
     (insert "#+PROPERTY: om_done_ration_ALL "
