@@ -489,8 +489,8 @@ whose host is BASE-URL."
   (save-match-data
     (if (string-match "^\\(http.*\\)/issues/\\([0-9]+\\)" url)
         ;; redmine url -> orgmine
-        (let* ((base-url (match-string 1 link))
-               (issue-id (match-string 2 link))
+        (let* ((base-url (match-string 1 url))
+               (issue-id (match-string 2 url))
                (server (orgmine-server base-url)))
           (if server
               (cons (car server) issue-id))))))
