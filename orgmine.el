@@ -1708,7 +1708,7 @@ Otherwise, new tree will be inserted at BEG."
   "Update ENTRY (org-element data) of TYPE per PLIST.
 If the entry of Redmine is not updated since last sync and FORCE is nil,
 the entry is not updated.
-TYPE could be 'issue, 'fixed_version, 'tracker, and 'project.
+TYPE could be `issue', `fixed_version', `tracker', and `project'.
 Returns non-nil if the entry is updated."
   (let* ((beg (org-element-property :begin entry))
 	 (idname (orgmine-idname plist))
@@ -3344,7 +3344,7 @@ Then entry could be an issue, version, tracker or project."
 
 (defun orgmine-skeletonize-headline (type property-list todo-keyword)
   "Make the current headline into a skeleton headline.
-TYPE is any of 'issue, 'fixed_version, 'tracker, 'project.
+TYPE is any of `issue', `fixed_version', `tracker', `project'.
 All properties are removed but PROPERTY-LIST.
 If TODO-KEYWORD is not null, set TODO Keyword to TODO-KEYWORD."
   (unless (org-at-heading-p t) (error "not a headline."))
