@@ -1000,7 +1000,7 @@ or move to current issue headline."
 	 (other-id (elmine/ensure-string (if (equal my-id issue-to-id)
 					     (plist-get plist :issue_id)
 					   issue-to-id)))
-	 (delay (plist-get relation :delay)))
+	 (delay (plist-get plist :delay)))
     (if (and (member type '("precedes" "follows")) delay)
 	(format "%s/d%s" other-id delay)
       other-id)))
