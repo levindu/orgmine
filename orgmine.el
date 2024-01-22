@@ -1078,7 +1078,7 @@ a plist of (:id ID :name NAME)."
   "Workaround for old `org-entry-properties' that cannot get properties
 from the headline property drawer."
   (condition-case err
-      (org-entry-properties pom which "")
+      (org-entry-properties pom which)
     (error
      (if (eq (car err) 'wrong-number-of-arguments)
 	 (org-entry-properties pom which)))))
@@ -2579,7 +2579,7 @@ set PROPERTY to VALUE."
 		  (orgmine-upload-attachents plist)))
 	    (if uploads
 		(setq plist
-		      (plist-merge plist :uploads uploads :attachments nil)))
+		      (plist-merge plist (list :uploads uploads :attachments nil))))
 	    (let* ((res-plist (elmine/create-issue plist))
 		   (redmine-issue (plist-get res-plist :issue))
 		   (id (plist-get redmine-issue :id)))
