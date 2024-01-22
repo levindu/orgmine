@@ -1093,8 +1093,9 @@ from the headline property drawer."
 	      (if (and plist
 		       (not (orgmine-plist-list-get custom-fields
 						    :id (plist-get plist :id))))
-		  (let* ((props (cdr (assoc-string name orgmine-custom-fields
-						   t)))
+		  (let* ((props (and (boundp 'orgmine-custom-fields)
+                                     (cdr (assoc-string name orgmine-custom-fields
+						   t))))
 			 (value (cdr property)))
 		    (if (plist-get props :multiple)
 			(setq value (mapcar 'org-entry-restore-space
