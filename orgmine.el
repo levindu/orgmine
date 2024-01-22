@@ -2940,7 +2940,7 @@ found in the region from BEG to END."
 	    (setq filters (plist-put filters :parent_id id))))
       filters)))
 
-(defun orgmine-update-issue-maybe (id beg end)
+(defun orgmine-update-issue-maybe (id beg end &optional force)
   "Update issue entry and return non-nil if it exists in the buffer.
 Otherwise, return nil."
   (goto-char beg)
@@ -2971,7 +2971,7 @@ new entry will be inserted into the current position."
   (let ((beg (point)))
     (mapc (lambda (id)
 	    (or (member id orgmine-ignore-ids)
-;; 		(orgmine-update-issue-maybe id beg end)
+;; 		(orgmine-update-issue-maybe id beg end force)
 		(orgmine-update-issue-all-maybe id)
 		(progn
 		  ;; insert issue as new entry.
