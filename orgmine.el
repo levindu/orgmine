@@ -2904,7 +2904,7 @@ found in the region from BEG to END."
 	(what (format "issues whose author is %s..." who)))
     (orgmine-match-sparse-tree todo-only match what)))
 
-(defun orgmine-show-category (category)
+(defun orgmine-show-category (category todo-only)
   "Show entries of CATEGORY."
   (interactive (list (completing-read
 		      "Category: "
